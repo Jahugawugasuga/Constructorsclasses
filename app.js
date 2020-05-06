@@ -1,6 +1,7 @@
-// const Manager = require("./lib/Manager");
-// const Engineer = require("./lib/Engineer");
-// const Intern = require("./lib/Intern");
+const Manager = require("./lib/Manager");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
+const Employee = require("./lib/Employee");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
@@ -35,79 +36,149 @@ const render = require("./lib/htmlRenderer");
 // for the provided `render` function to work! ```
 
 
+function teamBuilder() {
+  
+
+
     inquirer
         .prompt([
 
             {
-                type: "input",
-                message: "What is your name?",
-                name: "name"
-            },
-            {
-                type: "input",
-                message: "What is your email?",
-                name: "email"
-            },
-            {
-                type: "input",
-                message: "What is your ID#?",
-                name: "id"
-            },
-            {
                 type: "list",
-                message: "Are you a manager, engineer, or intern?",
+                message: "Are you creating an entry for a manager, engineer, or intern?",
                 name: "role",
                 choices: [
                     "Manager",
                     "Engineer",
-                    "Intern"
+                    "Intern",
+                    
 
                 ]
-            }
-        ])
-        
-        .then(function (answers) {
-            console.log(answers);
-        })
+            },
+            {
+                type: "input",
+                message: "What is the employee's name?",
+                name: "name"
+            },
+            {
+                type: "input",
+                message: "What is their email?",
+                name: "email"
+            },
+            {
+                type: "input",
+                message: "What is their ID#?",
+                name: "id"
+            },
 
-            var employeeType = answers.employeeType
+        ])
+
+        .then(function (answers) {
+            const employee = new Employee (answers.name, answers.id, answers.email)
+            var employeeType = answers.role
+        
             switch (employeeType) {
                 case ("Intern"):
                     inquirer.prompt([
                         {
                             type: "input",
-                            message: "What school do you go to?",
+                            message: "What school do they go to?",
                             name: "school"
+                        },
+                        {
+                            type: "list",
+                            message: "Would you like to add another employee?",
+                            name: "more",
+                            choices: [
+                                "yes",
+                                "no"
+                            ]
                         }
-
+                        
                     ])
-                    getRole("Intern")    
+
+                        .then(function (answers) {
+                            const intern = new Intern (answers.school)
+                            constructor(name, id, email)
+                            if (answers.more === "yes"){
+                                console.log(employee.name);
+                                teamBuilder();
+                                
+                            } else {
+                                // render();
+                            }
+                        
+                        }
+                        )
+                    // getRole("Intern") //does this work?   
                     break;
                 case ("Engineer"):
                     inquirer.prompt([
-                    
+
                         {
                             type: "input",
-                            message: "What is your GitHub username?",
+                            message: "What is their GitHub username?",
                             name: "github"
+                        },
+
+                        {
+                            type: "list",
+                            message: "Would you like to add another employee?",
+                            name: "more",
+                            choices: [
+                                "yes",
+                                "no"
+                            ]
+                        }
+                    ])
+                        .then(function (answers) {
+                            const engineer = new Engineer (answers.github) 
+                            if (answers.more === "yes"){
+                                console.log(employee.name);
+                                teamBuilder();
+                            } else {
+                                // render();
+                            }
+                        
+                        }
+                        )
+                    // getGitHub();
+                    // getRole("Engineer"); //does this work?
+                    break;
+                case ("Manager"):
+                    inquirer.prompt([
+
+                        {
+                            type: "input",
+                            message: "What is their Office Number?",
+                            name: "officenumber"
+                        },
+                        {
+                            type: "list",
+                            message: "Would you like to add another employee?",
+                            name: "more",
+                            choices: [
+                                "yes",
+                                "no"
+                            ]
                         }
 
                     ])
-                    getGitHub();
-                    getRole("Engineer"); 
-                        break;
-                case ("Manager"):
-                    inquirer.prompt([
-                    
-                        {
-                            type: "input",
-                            message: "What is your Office Number?",
-                            name: "officenumber"
-                        }
-                    
-                ])
-                    getRole("Manager") 
-
-
-            }
+                        .then(function (answers) {
+                            const manager = new Manager (answers.officenumber)
+                            if (answers.more === "yes"){
+                                console.log(employee.name);
+                                teamBuilder();
+                            } else {
+                                // render();
+                            }
+                        
+                        
+                        }    // getRole("Manager") //does this work? 
+                        )
+             }
+        }
+    )
+}
         
+teamBuilder();
