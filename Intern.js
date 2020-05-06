@@ -2,18 +2,21 @@
 const Employee = require("./Employee");
 
 class Intern extends Employee {
-    constructor(id, school, role) {
-        super(answers.name, answers.id, answers.email);
-        this.school = school;
-        this.role = role;
+    constructor(name, school) {
+       super(name, id, email, "Intern");
+       this.name = name;
+       this.id = id;
+       this.email; 
+       this.school = school;
+      
         
     }
 
 
 
 }
-
-const intern = new Intern (35, "BYU", "Intern");
-console.log(`${this.role}`)
-console.log(`${intern.role}`)
-console.log(`${intern.school}`)
+module.exports = Intern;
+// const intern = new Intern (35, "BYU", "Intern");
+// console.log(`${this.role}`)
+// console.log(`${intern.role}`)
+// console.log(`${intern.school}`)
